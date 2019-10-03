@@ -5,4 +5,3 @@ class Player:
 
     def take_cards(self, cards):
         self.hand += cards
-        self.hand.sort()

@@ -1,5 +1,5 @@
-from card import Card, Rank, Suit, Color
-from random import shuffle
+from util.card import Card, Rank, Suit, Color
+from random import shuffle, randrange
 
 class Deck:
     def __init__(self, exclude_jokers=False):
@@ -8,26 +8,31 @@ class Deck:
     def create_shuffled_deck(self, exclude_jokers):
         self.deck = []
         for rank in Rank:
+            if rank == Rank.JOKER:
+                continue
             for suit in Suit:
-                alt_value = rank
-                if rank == Rank.KING or rank == Rank.QUEEN or rank == Rank.JACK:
-                    alt_value = 10
                 color = Color.BLACK
                 if suit == Suit.HEARTS or suit == Suit.DIAMONDS:
                     color = Color.RED
-                self.deck.append(Card(rank, suit, color, alt_value=alt_value))
+                self.deck.append(Card(rank, suit, color))
 
         if not exclude_jokers:
             self.deck.append(Card(Rank.JOKER, None, None))
 
         shuffle(self.deck)
 
-    def draw(n):
+    def draw(self, n):
         if len(self.deck) >= n:
             cards = self.deck[-n:]
             self.deck = self.deck[:-n]
             return cards
         return []
+
+    def insert_randomly(self, card):
+        self.deck.insert(randrange(len(self.deck) + 1), card)
+
+    def shuffle(self):
+        shuffle(self.deck)
 
 
 
