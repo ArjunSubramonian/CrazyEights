@@ -14,6 +14,7 @@ I played the game multiple times with friends and looked out to make sure the fo
 5) Game terminates when one player reaches zero cards
 6) Properly formatted and accurate commentary on the cards drawn and which one is ultimately played when player has no card that matches the rank/denomination or suit of the faceup card
 7) Faceup pile (except for top card) is reshuffled and becomes the new facedown deck when the deck runs out
+8) Player can't play invalid card, and is reprompted to play until they play a valid card
 
 Rules:
 Crazy Eights: https://bicyclecards.com/article/top-three-classic-family-card-games/
@@ -30,6 +31,7 @@ Classes, data structures, and algorithms:
     - Game class
         - Functionality: prepares game (players and deck), deals cards, and executes playing of game
         - Interactions with other classes: stores a Deck object and the players as a list of Player objects
+        - Helper function: determines if card is a valid play based on faceup card (reduces frequent duplication of code)
     - Player class
         - Functionality: stores name of player and the cards in their hand (as a list), allows cards to be added to the player's hand
     - Deck class

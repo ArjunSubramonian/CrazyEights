@@ -73,13 +73,20 @@ class Game:
 
             unable_to_play = True
             for card in current_player.hand:
-                if card.rank == Rank.EIGHT or card.suit == self.faceup[-1].suit or card.rank == self.faceup[-1].rank:
+                if self.is_valid_card(card):
                     unable_to_play = False
 
             if not unable_to_play:
                 card_idx = input('Enter the index of the card you want to play (1-' + str(len(current_player.hand)) + '): ').strip()
-                while not card_idx.isdigit() or (card_idx.isdigit() and (int(card_idx) < 1 or int(card_idx) > len(current_player.hand))):
-                    card_idx = input('Please enter a valid number between 1 and ' + str(len(current_player.hand)) + ': ')
+                not_valid_num = not card_idx.isdigit() or (card_idx.isdigit() and (int(card_idx) < 1 or int(card_idx) > len(current_player.hand)))
+                valid_card = card_idx.isdigit() and (int(card_idx) >= 1 and int(card_idx) <= len(current_player.hand)) and self.is_valid_card(current_player.hand[int(card_idx) - 1])
+                while not_valid_num or not valid_card:
+                    if not_valid_num:
+                        card_idx = input('Please enter a valid number between 1 and ' + str(len(current_player.hand)) + ': ')
+                    elif not valid_card:
+                        card_idx = input('Please play an 8 or a card of the same denomination or suit as the top faceup card: ')
+                    not_valid_num = not card_idx.isdigit() or (card_idx.isdigit() and (int(card_idx) < 1 or int(card_idx) > len(current_player.hand)))
+                    valid_card = card_idx.isdigit() and (int(card_idx) >= 1 and int(card_idx) <= len(current_player.hand)) and self.is_valid_card(current_player.hand[int(card_idx) - 1])
                 card_idx = int(card_idx)
                 card = current_player.hand.pop(card_idx - 1)
                 self.faceup.append(card)
@@ -88,7 +95,7 @@ class Game:
                 while len(self.deck.deck) > 0:
                     card = self.deck.draw(1)[0]
                     print('Drew ' + str(card))
-                    if card.rank == Rank.EIGHT or card.suit == self.faceup[-1].suit or card.rank == self.faceup[-1].rank:
+                    if self.is_valid_card(card):
                         print(str(card) + ' works!')
                         self.faceup.append(card)
                         break
@@ -107,6 +114,9 @@ class Game:
                 return current_player
 
             i += 1
+
+    def is_valid_card(self, card):
+        return card.rank == Rank.EIGHT or card.suit == self.faceup[-1].suit or card.rank == self.faceup[-1].rank
 
 
 
