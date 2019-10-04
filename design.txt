@@ -1,0 +1,61 @@
+To play game, run:
+
+python3 crazy_eights.py
+
+in the console.
+
+Tests:
+I played the game multiple times with friends and looked out to make sure the following cases were handled correctly:
+1) Non-numeric and non-digit inputs are not accepted when answer to question is supposed to be an integer, and player is reprompted to answer the question (with specific guidelines related to the error they made)
+    1.1) Especially for empty string inputs!
+2) Cards played are both added to the faceup pile AND removed from the player's hand
+3) Deck doesn't contain jokers
+4) The first faceup card is never an 8
+5) Game terminates when one player reaches zero cards
+6) Properly formatted and accurate commentary on the cards drawn and which one is ultimately played when player has no card that matches the rank/denomination or suit of the faceup card
+7) Faceup pile (except for top card) is reshuffled and becomes the new facedown deck when the deck runs out
+
+Rules:
+Crazy Eights: https://bicyclecards.com/article/top-three-classic-family-card-games/
+
+Design choices:
+Setup design:
+1) Allows for 2-8 players
+2) Players can only see their cards when it's their turn (i.e. their current cards are only printed to the screen when it's their turn)
+4) Player selects which card to play based on the index of the card in their hand
+3) Program takes care of drawing cards and ultimately playing one when player has no card that matches the denomination or suit of the faceup card, and provides commentary while doing so
+
+Classes, data structures, and algorithms:
+1) Modularized:
+    - Game class
+        - Functionality: prepares game (players and deck), deals cards, and executes playing of game
+        - Interactions with other classes: stores a Deck object and the players as a list of Player objects
+    - Player class
+        - Functionality: stores name of player and the cards in their hand (as a list), allows cards to be added to the player's hand
+    - Deck class
+        - Functionality: iteratively creates standard deck of cards, with or without jokers, and shuffles cards in deck (cards are stored internally as a list); allows n cards to be drawn from top of deck; provides support for deck to be shuffled and a card to be inserted randomly
+        - Interactions with other classes: cards in deck are Card objects
+    - Card class:
+        - Functionality: stores rank/denomination, suit, and color of card; provides string representation of card reflecting the aforementioned attributes
+2) Data structures:
+    - Players stored internally as list in Game class
+    - Cards in deck stored internally as list in Deck class
+    - For the most part, faceup cards represented as stack (because you only ever care about the top faceup card)
+        - Implementented as a list, only using -1 to access last element
+        - Stack property broken when faceup cards (except for top one) are shuffled and become the facedown deck
+3) Algorithms:
+    - Random choice to pick random player to deal and random position to insert card in facedown deck
+    - Random shuffle to shuffle deck
+
+Tools:
+1) Chose to write my code in Python because:
+    - Simple language, which allows for efficient prototyping of game
+    - Python has an extensive set of built-in and third party libraries
+2) Libraries:
+    - Chose to use Python's built-in random class to perform random-number operations, like random choice and shuffling
+    - random class likely contains more optimized and error-free implementations than code I could have written
+        - And, no need to reinvent the wheel!
+
+
+
+

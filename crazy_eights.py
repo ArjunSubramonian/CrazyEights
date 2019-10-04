@@ -1,5 +1,8 @@
 from util.game import Game
 
+'''Rules:
+https://bicyclecards.com/article/top-three-classic-family-card-games/'''
+
 if __name__ == '__main__':
     while True:
         g = Game()
